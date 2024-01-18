@@ -95,75 +95,49 @@
 
             var imageObject;
             let imgFrame = $('#frame img');
-            let imgFrameSrc = imgFrame.attr('src');
-            // if(imgFrameSrc != "") {
-                fabric.Image.fromURL('https://picsum.photos/200/200', function(img) {
-                    img.set({width:200,height:200,scaleX:1,scaleY:1})
-                    imageObject = img;
-                    canvas.add(img);
-            });
+            // let imgFrameSrc = imgFrame.attr('src');
+            // // if(imgFrameSrc != "") {
+            //     fabric.Image.fromURL('https://picsum.photos/200/200', function(img) {
+            //         img.set({width:200,height:200,scaleX:1,scaleY:1})
+            //         imageObject = img;
+            //         canvas.add(img);
+            // });
+            // // }
+            
+            // var i=0;
+
+            // function changeSrc(imgFrameSrc){
+            //   // var url = 'https://picsum.photos/200/200?random='+ ++i;
+            //   imageObject.setSrc(imgFrameSrc,function(){
+            //     canvas.requestRenderAll();
+            //   })
             // }
-            
-            var i=0;
 
-            function changeSrc(imgFrameSrc){
-              // var url = 'https://picsum.photos/200/200?random='+ ++i;
-              imageObject.setSrc(imgFrameSrc,function(){
-                canvas.requestRenderAll();
-              })
-            }
-
-            imgFrame.on( "click", function() {
-                imgFrameSrc = $(this).attr('src');
-                changeSrc(imgFrameSrc)
-            
-            });
+            // imgFrame.on( "click", function() {
+            //     imgFrameSrc = $(this).attr('src');
+            //     // addImage(imgFrameSrc)
+            //     fabric.Image.fromURL(imgFrameSrc, function(oImg) {
+            //           oImg.set({
+            //             left: 100,
+            //             top: 100,
+            //             scaleX: 500 / oImg.width,
+            //             scaleY: 500 / oImg.height
+            //           });
+            //           oImg.set('selectable', false);
+            //           canvas.add(oImg);  
+            //       });
+            // });
            
 
-            // var imageObject;
             
-            // let imgFrame = $('#frame img');
-            // let imgFrameSrc = imgFrame.attr('src');
-            // fabric.Image.fromURL(
-            //     "https://www.tutorialspoint.com/images/logo.png",
-            //     function(Img) {
-            //         imageObject = Img;
-            //         canvas.add(Img).renderAll();
-            //     }, {
-            //         crossorigin: "anonymous"
-            //     }
-            // );
-            // imgFrame.on( "click", function() {
-            //   imgFrameSrc = $(this).attr('src');
-            //   // console.log(imgFrameSrc);
-            //   // img1 = loadImage(imgFrameSrc, main);
-            //     imageObject.setSrc(
-            //         imgFrameSrc,
-            //         function() {
-            //             canvas.renderAll();
-            //         }
-            //     );
-            // //   fabric.Image.fromURL(imgFrameSrc, function(oImg) {
-            // //     oImg.set({
-            // //       scaleX: 500 / oImg.width,
-            // //       scaleY: 500 / oImg.height
-            // //     });
-            // //     canvas.centerObject(oImg);
-            // //     oImg.set('selectable', false);
-            // //     canvas.add(oImg);  
-            // // });
-            
-            // });
             
             function addImage(imgLink) {
                 fabric.Image.fromURL(imgLink, function(img) {
-                    // img.set({
-                    //   scaleX: 500 / img.width,
-                    //   scaleY: 500 / img.height
-                    // });
+                    img.set({ 'left': 0 });
+                    img.set({ 'top': 0 });
                     img.scaleToWidth(500);
-                    // img.scaleToHeight(500);
-                    canvas.centerObject(img);   
+                    img.scaleToHeight(500);
+                    
                     var objs = canvas.getObjects();
                     if (objs.length) {
                         objs.forEach(function(e) {
@@ -176,7 +150,7 @@
                 });
             }
 
-            // addImage('http://lorempixel.com/400/200');
+            // addImage('https://scontent.fsgn2-9.fna.fbcdn.net/v/t39.30808-6/420170317_381578387720558_2270698712819604590_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=a73e89&_nc_ohc=SuA0_VyC_0MAX-o_kw7&_nc_ht=scontent.fsgn2-9.fna&oh=00_AfDrbKUStT_zJgPKRVmK857cxsE4juyLZZO3sBr00_fGdA&oe=65AD14C1');
 
             // file upload
             var span = document.querySelector('#uploadImg');
@@ -188,36 +162,9 @@
                 }
                 reader.readAsDataURL(file);
             }
-            
 
 
-            // document.getElementById('uploadImg').onchange = function handleImage(e) {
-            //     console.log(e.target.files[0])
-            //     var reader = new FileReader();
-            //   reader.onload = function (event){
-            //     var imgObj = new Image();
-            //     imgObj.src = event.target.result;
-            //     imgObj.onload = function () {
-            //       var image = new fabric.Image(imgObj);
-            //       image.set({
-            //             angle: 0,
-            //             padding: 10,
-            //             cornersize:10,
-            //             scaleX: 500 / image.width,
-            //             scaleY: 500 / image.height,
-            //             // height:110,
-            //             // width:110,
-            //       });
-            //       canvas.centerObject(image);
-            //       canvas.add(image);
-            //       canvas.sendToBack(image);
-            //       // canvas.renderAll();
-            //     }
-            //   }
-            //   reader.readAsDataURL(e.target.files[0]);
-            // }
-            
-            
+                                        
             
             $('#btn').click(function(){
                var trsvg = canvas.toSVG();
