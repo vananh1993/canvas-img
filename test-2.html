@@ -78,6 +78,7 @@
             var canvas = new fabric.Canvas('c');
 
             canvas.controlsAboveOverlay = true; 
+            canvas.controlsInStack = true;
            
             function setName(obj,name){
               obj.toObject = (function(toObject) {
@@ -93,7 +94,7 @@
 
 
 
-            var imageObject;
+            // var imageObject;
             let imgFrame = $('#frame img');
             // let imgFrameSrc = imgFrame.attr('src');
             // // if(imgFrameSrc != "") {
@@ -113,20 +114,35 @@
             //   })
             // }
 
-            // imgFrame.on( "click", function() {
-            //     imgFrameSrc = $(this).attr('src');
-            //     // addImage(imgFrameSrc)
-            //     fabric.Image.fromURL(imgFrameSrc, function(oImg) {
-            //           oImg.set({
-            //             left: 100,
-            //             top: 100,
-            //             scaleX: 500 / oImg.width,
-            //             scaleY: 500 / oImg.height
-            //           });
-            //           oImg.set('selectable', false);
-            //           canvas.add(oImg);  
+            function removeObjectById(id) {
+              const obj = getObjectById(id);
+
+              if (obj) canvas.remove(obj);
+            }
+
+            function getObjectById(id) {
+              return canvas.getObjects().find((object) => object.id === id);
+            }
+
+            function selectFrame(src) {
+              canvas.setOverlayImage(src, canvas.renderAll.bind(canvas));
+            //   fabric.Image.fromURL(src, function(oImg) {
+            //       oImg.set({
+            //         id: 'img-frame',
+            //         left: 100,
+            //         top: 100,
+            //         scaleX: 500 / oImg.width,
+            //         scaleY: 500 / oImg.height
             //       });
-            // });
+            //       oImg.set('selectable', false);
+            //       removeObjectById('img-frame');
+            //       canvas.add(oImg);  
+            //   });
+            }
+
+            imgFrame.on( "click", function() {
+                selectFrame($(this).attr('src'));
+            });
            
             // fabric.Image.fromURL('https://www.vinamilk.com.vn/sua-bot-vinamilk/wp-content/themes/vinamilk_suabot/tpl/dist/assets//images/product-detail/colors-gold/intro-img-mo.png', function(imgFrame) {
             //         // scale image down, and flip it, before adding it onto canvas
@@ -144,20 +160,16 @@
             
             function addImage(imgLink) {
                 fabric.Image.fromURL(imgLink, function(img) {
+                   removeObjectById('img-upload');
+
+                    img.set({ id: 'img-upload' });
                     img.set({ 'left': 0 });
                     img.set({ 'top': 0 });
                     img.scaleToWidth(500);
                     img.scaleToHeight(500);
-                    
-                    var objs = canvas.getObjects();
-                    if (objs.length) {
-                        objs.forEach(function(e) {
-                            if (e && e.type === 'image') {
-                                e._element.src = imgLink;
-                                canvas.renderAll();
-                            }
-                        });
-                    } else canvas.add(img);
+
+                    canvas.add(img);
+                    canvas.sendToBack(img);
                 });
             }
 
