@@ -128,6 +128,17 @@
             //       });
             // });
            
+            fabric.Image.fromURL('https://www.vinamilk.com.vn/sua-bot-vinamilk/wp-content/themes/vinamilk_suabot/tpl/dist/assets//images/product-detail/colors-gold/intro-img-mo.png', function(imgFrame) {
+                    // scale image down, and flip it, before adding it onto canvas
+                    imgFrame.set({
+                      left: 100,
+                      top: 100,
+                      scaleX: 500 / imgFrame.width,
+                      scaleY: 500 / imgFrame.height
+                    });
+                    imgFrame.set('selectable', false);
+                    canvas.add(imgFrame);  
+                });
 
             
             
