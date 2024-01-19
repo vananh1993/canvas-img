@@ -37,15 +37,15 @@
                 <div class="col-2">
                     <ul id="frame" style="height: 650px; overflow: auto;">
                         <li>
-                            <img src="./img/anh-1.png">
+                            <img src="./img/img-1.png">
                         </li>
                         <li>
-                            <img src="./img/anh-2.png">
+                            <img src="./img/img-2.png">
                         </li><li>
-                            <img src="./img/anh-1.png">
+                            <img src="./img/img-1.png">
                         </li>
                         <li>
-                            <img src="./img/anh-2.png">
+                            <img src="./img/img-2.png">
                         </li>
                     </ul>
                 </div>
@@ -69,7 +69,8 @@
 
             canvas.controlsAboveOverlay = true; 
             canvas.controlsInStack = true;
-           
+            canvas.allowTouchScrolling = true;
+            
             function setName(obj,name){
               obj.toObject = (function(toObject) {
               return function() {
@@ -114,6 +115,7 @@
                     img.scaleToWidth(500);
                     img.scaleToHeight(500);
                     canvas.centerObject(img);
+
                     canvas.add(img);
                     canvas.sendToBack(img);
                 });
