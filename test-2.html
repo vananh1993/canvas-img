@@ -28,53 +28,43 @@
             margin: 0;
             padding-left: 0;
             }
+            li {
+                margin-bottom: 10px;
+            }
         </style>
         <div class="container">
             <div class="row">
-                <div class="col-4">
-                    <ul id="frame">
+                <div class="col-2">
+                    <ul id="frame" style="height: 650px; overflow: auto;">
                         <li>
-                            <img src="./img/transparent-1.png">
+                            <img src="./img/anh-1.png">
                         </li>
                         <li>
-                            <img src="./img/transparent-2.png">
+                            <img src="./img/anh-2.png">
+                        </li><li>
+                            <img src="./img/anh-1.png">
                         </li>
                         <li>
-                            <img src="./img/transparent-3.png">
-                        </li>
-                        <li>
-                            <img src="./img/transparent-4.png">
+                            <img src="./img/anh-2.png">
                         </li>
                     </ul>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <div class="mb-4">
                         <span><input type="file" name="images" id="uploadImg" accept="image/*;capture=camera"  capture></span>
                     </div>
                     <!-- A canvas tag is required or 
                         Fabric.js doesn't know where to draw. -->
-                    <canvas id="c" width="500" height="500"></canvas>
+                    <canvas id="c" width="450" height="637"></canvas>
                     <br/>
                 </div>
             </div>
         </div>
-        <!-- <canvas id="cv" width="500" height="500"></canvas> -->
-        <button type="button" id="btn"> Export&Import SVG</button>
-        <button type="button" id="btn_edit"> Export&Import JSON </button>  
-        <!--  <p>Export to SVG</p> 
-            <div id="svg-tag"></div>
-             
-            <p>Import from SVG</p> 
-            <canvas id="canvas-svg" width="500" height="500"></canvas>  
-            <p>Import from JSON</p> 
-            <canvas id="canvas" width="500" height="500"></canvas> 
-            -->
+        <button id="btndownload">Download PNG</button>
+        <button id="btndownloadjpg">Download JPG</button>
         <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.7.0/fabric.js"></script>
         <script type="text/javascript">
-            /* Write JavaScript here */
-            
-            var imgSrc ='http://th09.deviantart.net/fs71/PRE/i/2012/340/7/b/png_bird_by_moonglowlilly-d5n88u2.png';
             var canvas = new fabric.Canvas('c');
 
             canvas.controlsAboveOverlay = true; 
@@ -96,24 +86,6 @@
 
             // var imageObject;
             let imgFrame = $('#frame img');
-            // let imgFrameSrc = imgFrame.attr('src');
-            // // if(imgFrameSrc != "") {
-            //     fabric.Image.fromURL('https://picsum.photos/200/200', function(img) {
-            //         img.set({width:200,height:200,scaleX:1,scaleY:1})
-            //         imageObject = img;
-            //         canvas.add(img);
-            // });
-            // // }
-            
-            // var i=0;
-
-            // function changeSrc(imgFrameSrc){
-            //   // var url = 'https://picsum.photos/200/200?random='+ ++i;
-            //   imageObject.setSrc(imgFrameSrc,function(){
-            //     canvas.requestRenderAll();
-            //   })
-            // }
-
             function removeObjectById(id) {
               const obj = getObjectById(id);
 
@@ -126,37 +98,11 @@
 
             function selectFrame(src) {
               canvas.setOverlayImage(src, canvas.renderAll.bind(canvas));
-            //   fabric.Image.fromURL(src, function(oImg) {
-            //       oImg.set({
-            //         id: 'img-frame',
-            //         left: 100,
-            //         top: 100,
-            //         scaleX: 500 / oImg.width,
-            //         scaleY: 500 / oImg.height
-            //       });
-            //       oImg.set('selectable', false);
-            //       removeObjectById('img-frame');
-            //       canvas.add(oImg);  
-            //   });
             }
 
             imgFrame.on( "click", function() {
                 selectFrame($(this).attr('src'));
             });
-           
-            // fabric.Image.fromURL('https://www.vinamilk.com.vn/sua-bot-vinamilk/wp-content/themes/vinamilk_suabot/tpl/dist/assets//images/product-detail/colors-gold/intro-img-mo.png', function(imgFrame) {
-            //         // scale image down, and flip it, before adding it onto canvas
-            //         imgFrame.set({
-            //           left: 100,
-            //           top: 100,
-            //           scaleX: 500 / imgFrame.width,
-            //           scaleY: 500 / imgFrame.height
-            //         });
-            //         imgFrame.set('selectable', false);
-            //         canvas.add(imgFrame);  
-            //     });
-
-            
             
             function addImage(imgLink) {
                 fabric.Image.fromURL(imgLink, function(img) {
@@ -167,13 +113,12 @@
                     img.set({ 'top': 0 });
                     img.scaleToWidth(500);
                     img.scaleToHeight(500);
-
+                    canvas.centerObject(img);
                     canvas.add(img);
                     canvas.sendToBack(img);
                 });
             }
 
-            // addImage('https://scontent.fsgn2-9.fna.fbcdn.net/v/t39.30808-6/420170317_381578387720558_2270698712819604590_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=a73e89&_nc_ohc=SuA0_VyC_0MAX-o_kw7&_nc_ht=scontent.fsgn2-9.fna&oh=00_AfDrbKUStT_zJgPKRVmK857cxsE4juyLZZO3sBr00_fGdA&oe=65AD14C1');
 
             // file upload
             var span = document.querySelector('#uploadImg');
@@ -187,211 +132,31 @@
             }
 
 
-                                        
-            
-            $('#btn').click(function(){
-               var trsvg = canvas.toSVG();
-               // var trsvg_cv = cv.toSVG();
-               var canvas_svg = new fabric.Canvas('canvas-svg');
-               $('#svg-tag').html(trsvg);
-                 //alert(JSON.stringify(trsvg));    
-                //alert(JSON.stringify(canvas.toDatalessJSON()));
-               var stringa = canvas.toJSON;    
-              
-               fabric.loadSVGFromString( trsvg , function (objects, options) {
-                 var obj = fabric.util.groupSVGElements(objects, options);
-                 canvas_svg.add(obj).centerObject(obj);
-                 obj.setCoords();
-                 canvas_svg.calcOffset();
-                 canvas_svg.renderAll();
-                  //alert('sss');  
-               }); 
-              
-            });
-              // Attach it to the canvas object, then (re)display
-              // the canvas. 
-            /*
-            circle.animate('left', 10, {
-                onChange: canvas.renderAll.bind(canvas),
-                duration: 5000,
-                easing: fabric.util.ease.easeOutBounce
-            });*/
-            //cv.add(hi);
-            // canvas.add(circle);
-            // canvas.add(recta);
-            //recta.name = 'recta';
-            //hi.name ='hi';
-            // canvas.add(hi);
-             //  canvas.add(his); 
-            
-            $('#btn_edit').click(function(){
-            var canvas_ = new fabric.Canvas('canvas');
-            console.log('Click Edit');
-              
-              
-            //JSON DATA   
-            var json_data = JSON.stringify(canvas.toDatalessJSON()); 
-            console.log(json_data);
-            //LOAD JSON DATA
-            
-            canvas_.loadFromJSON(JSON.parse(json_data), function(obj) {
-              canvas_.renderAll();
-               console.log(' this is a callback. invoked when canvas is loaded!xxx ');
-               
-              canvas_.forEachObject(function(obj){
-                console.log(obj.name);
-              
-                if(obj.name === 'recta'){      
-                  obj.set({
-                            left: 100,
-                            top:200,
-                            height: 700,
-                            width: 700,
-                            scaleX: .35,
-                            scaleY:.35,
-                    lockScalingY: .35
-                        });
-                        
-                  canvas_.add(obj); 
-                }
-                
-              });
-            
-                 
-            });  
-            
-              
-              /*
-            canvas_.loadFromJSON(json_data, function() {
-                canvas_.renderAll();
-            });
-              */
-            });
-            //Load imange from url
-            
-            
-            /**
-            function loadImage(url, callback, context) {
-              if (url) {
-                var img = new Image();
-                // @ignore 
-                img.onload = function () { 
-                  callback && callback.call(context, img);
-                  img = img.onload = null;
-                };
-                img.src = url;
+
+            var dwn = document.getElementById('btndownload');
+            dwn.onclick = function(){
+                download(canvas, 'myimage.png', "image/png;base64");
+            }
+            var dwn = document.getElementById('btndownloadjpg');
+            dwn.onclick = function(){
+                download(canvas, 'myimage.jpg', "image/jpg;base64");
+            }
+
+            function download(canvas, filename,type) {
+              var lnk = document.createElement('a'), e;
+              lnk.download = filename;
+              lnk.href = canvas.toDataURL(type);
+              if (document.createEvent) {
+                e = document.createEvent("MouseEvents");
+                e.initMouseEvent("click", true, true, window,
+                                 0, 0, 0, 0, 0, false, false, false,
+                                 false, 0, null);
+
+                lnk.dispatchEvent(e);
+              } else if (lnk.fireEvent) {
+                lnk.fireEvent("onclick");
               }
             }
-            
-            var v=document.getElementById("video1");
-            var cv_=document.getElementById("c");
-            ctx=cv_.getContext('2d');
-            v.addEventListener('play', function() {
-              var i=window.setInterval(function(){
-                ctx.drawImage(v,5,5,260,125)},0,0);                                   
-               },false);
-            v.addEventListener('pause',function() {window.clearInterval(i);},false);
-            v.addEventListener('ended',function() {clearInterval(i);},false); 
-            */
-            /* 
-            fabric.Object.prototype.transparentCorners = false;
-            
-              var canvas = this.__canvas = new fabric.Canvas('c', {
-                backgroundColor: '#333',
-                HOVER_CURSOR: 'pointer'
-              });
-            
-              var PolaroidPhoto = fabric.util.createClass(fabric.Object, fabric.Observable, {
-                H_PADDING: 20,
-                V_PADDING: 50,
-                originX: 'center',
-                originY: 'center',
-                initialize: function(src, options) {
-                  this.callSuper('initialize', options);
-                  this.image = new Image();
-                  this.image.src = src;
-                  this.image.onload = (function() {
-                    this.width = this.image.width;
-                    this.height = this.image.height;
-                    this.loaded = true;
-                    this.setCoords();
-                    this.fire('image:loaded');
-                  }).bind(this);
-                },
-                _render: function(ctx) {
-                  if (this.loaded) {
-                    ctx.fillStyle = '#fff';
-                    ctx.fillRect(
-                      -(this.width / 2) - this.H_PADDING,
-                      -(this.height / 2) - this.H_PADDING,
-                      this.width + this.H_PADDING * 2,
-                      this.height + this.V_PADDING * 2);
-                    ctx.drawImage(this.image, -this.width / 2, -this.height / 2);
-                  }
-                }
-              });
-              var photo = new PolaroidPhoto('http://fabricjs.com/assets/pug.jpg', {
-                top: 200,
-                left: 200,
-                scaleX: 0.2,
-                scaleY: 0.2
-              });
-              photo.on('image:loaded', canvas.renderAll.bind(canvas));
-              photo.drawBorders = photo.drawCorners = function() { return this };
-            
-              function makeHandler(arg) {
-                return function(e) {
-                  if (e.target) {
-                    e.target.animate('angle', arg, {
-                      duration: 100,
-                      onChange: canvas.renderAll.bind(canvas)
-                    });
-                  }
-                };
-              }
-              canvas.on({
-                'mouse:down': makeHandler('+10'),
-                'mouse:up': makeHandler('-10')
-              });
-              canvas.add(photo);*/
-            
-            
-            /*
-            
-            var LabeledRect = fabric.util.createClass(fabric.Rect, {
-            
-              type: 'labeledRect',
-            
-              initialize: function(options) {
-                options || (options = { });
-            
-                this.callSuper('initialize', options);
-                this.set('label', options.label || '');
-              },
-            
-              toObject: function() {
-                return fabric.util.object.extend(this.callSuper('toObject'), {
-                  label: this.get('label')
-                });
-              },
-            
-              _render: function(ctx) {
-                this.callSuper('_render', ctx);
-            
-                ctx.font = '20px Helvetica';
-                ctx.fillStyle = '#333';
-                ctx.fillText(this.label, -this.width/2, -this.height/2 + 20);
-              }
-            });
-            var labeledRect = new LabeledRect({
-              width: 100,
-              height: 50,
-              left: 100,
-              top: 100,
-              label: 'test',
-              fill: '#faa'
-            });
-            canvas.add(labeledRect);*/
         </script>
     </body>
 </html>
