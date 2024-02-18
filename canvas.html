@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+
+<canvas id="canvas" width="600" height="400"></canvas>
+<div style="display:none;">
+  <img id="source" src="https://picsum.photos/id/237/300/200" width="300" height="200" />
+</div>
+
+<script type="text/javascript">
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const image = document.getElementById("source");
+
+image.addEventListener("load", (e) => {
+	const // image
+		  sx = 0,
+		  sy = 0,
+		  sWidth = 300,
+		  sHeight = 200,
+		  dx = 100,
+		  dy = 100,
+		  dWidth = 240,
+		  dHeight = 160;
+
+	ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+});
+</script>
+</body>
+</html>
